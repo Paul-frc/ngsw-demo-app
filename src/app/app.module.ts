@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { MainComponent } from './main/main.component';
     MainComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatTabsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
