@@ -1,27 +1,72 @@
-# Ngsw
+# ng cli app from scratch with 100 PWA & 100 PageSpeed mobile score
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.0.
+### Overview
+```
+* fe5ae2e        (HEAD -> master, tag: step-6, origin/master) add cache headers and lorem ipsum content
+* 9a0e48d        (tag: step-5) add firebase
+* 9be0bef        (tag: step-4) add manifest
+* 683be9f        (tag: step-3) add @angular/material style nav
+* 9ba7a32        (tag: step-2) ng g component main --module app.module
+* 7c60659        (tag: step-1) ng g app-shell shell --universal-app server
+* f411c1f        chore: initial commit from @angular/cli
+```
 
-## Development server
+## Prerequisites
+```
+brew install yarn   # recommended, but can use `npm` too
+yarn add global @angular/cli http-server
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Steps
 
-## Code scaffolding
+### 0. Initialize basic app with sw
+```
+ng new ngsw-demo --service-worker --routing
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 1. add app-shell for SSR
+```
+ng g app-shell shell --universal-app server
+yarn
+```
 
-## Build
+### 2. add main module (frontpage)
+```
+ng g component main --module app.module
+```
+- add import and route to app-routing module: `{path: '', component: MainComponent}`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+### 3. add material elements for navigation
+```
+yarn add @angular/material @angular/cdk @angular/animations
+```
+- Import to app.module: `BrowserAnimationsModule`, `MatTabsModule`
+- Add styles.css: `@import "~@angular/material/prebuilt-themes/indigo-pink.css";`
+- Add `<nav mat-tab-nav-bar> ... </nav>` navigation to app.component template
 
-## Running unit tests
+### 4. add manifest, build SSR
+- create src/manifest.json and add it to .angular-cli.json
+- add meta to index.html
+```
+ng build --prod
+hs dist
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 5. add firebase and deploy
+```
+firebase init
+# only hosting, deploy directory is `dist`
+firebase deploy
+```
+- will score 100 for PWA but poorly on PageSpeed
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### 6. add cache headers and content
+- add content to `app.component` template
+```
+ng build --prod
+```
+- inline `dist/styles...bundle.css` to `dist/index.html`
+```
+firebase deploy
+```
+- will score 100 & 100
