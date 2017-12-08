@@ -66,6 +66,7 @@ firebase deploy
 ng build --prod
 ```
 - inline `dist/styles...bundle.css` to `dist/index.html`
+- correct the sha sum of index.html in `dist/ngsw.json`
 ```
 firebase deploy
 ```
