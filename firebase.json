@@ -5,6 +5,19 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "headers": [{
+      "source" : "*.+([0-9a-f]).@(bundle|chunk).@(js|css)",
+      "headers" : [{
+        "key" : "Cache-Control",
+        "value" : "max-age=604800"
+      }]
+    },{
+      "source" : "assets/**",
+      "headers" : [{
+        "key" : "Cache-Control",
+        "value" : "max-age=604800,s-maxage=3600"
+      }]
+    }]
   }
 }
